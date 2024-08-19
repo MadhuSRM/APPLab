@@ -167,13 +167,6 @@ abstract class  Employee{
 	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
-
-	public void saveSalaryDetails(double da, double hra,double allow, double pf) {
-		setDa(da);
-		setHra(hra);
-		setAllowance(allow);
-		setPf(pf);
-	}
 	
 	public abstract double computeSalary();
 }
