@@ -20,39 +20,38 @@ public class EmployeeDemo {
 		String name = sc.nextLine();
 		System.out.println("Enter the basic pay:");
 		double basic = sc.nextDouble();
+		Employee employee = null;
 		switch(employeeType) {
 		case 1: 
-			Employee employee1 = new SoftwareEngineer(empid, name, basic, "SoftwareEngineer");
-			employee1.computeSalary();
-			generateSalarySlip(employee1.getEmployeeId(),employee1.getEmployeeName(),employee1.getBasicPay(),employee1.getDa(),employee1.getHra(),employee1.getAllowance(),employee1.getPf(),employee1.getSalary(),employee1.getDesignation());
+			employee = new SoftwareEngineer(empid, name, basic, "SoftwareEngineer");
 			break;
 		case 2:
-			Employee employee2 = new Designer(empid, name, basic,"Designer");
-			employee2.computeSalary();
-			generateSalarySlip(employee2.getEmployeeId(),employee2.getEmployeeName(),employee2.getBasicPay(),employee2.getDa(),employee2.getHra(),employee2.getAllowance(),employee2.getPf(),employee2.getSalary(),employee2.getDesignation());
+			employee = new Designer(empid, name, basic,"Designer");
 			break;
 		case 3:
-			Employee employee3 = new Accountant(empid, name, basic, "Accountant");
-			employee3.computeSalary();
-			generateSalarySlip(employee3.getEmployeeId(),employee3.getEmployeeName(),employee3.getBasicPay(),employee3.getDa(),employee3.getHra(),employee3.getAllowance(),employee3.getPf(),employee3.getSalary(),employee3.getDesignation());
+			employee = new Accountant(empid, name, basic, "Accountant");
 			break;
 		case 4:
-			Employee employee4 = new Manager(empid, name, basic, "Manager");
-			employee4.computeSalary();
-			generateSalarySlip(employee4.getEmployeeId(),employee4.getEmployeeName(),employee4.getBasicPay(),employee4.getDa(),employee4.getHra(),employee4.getAllowance(),employee4.getPf(),employee4.getSalary(),employee4.getDesignation());
+			employee = new Manager(empid, name, basic, "Manager");
 			break;
 		default:
 			System.out.println("Invalid Employee Type");
 		}
+		
+		employee.computeSalary();
+		generateSalarySlip(employee.getEmployeeId(),employee.getEmployeeName(),employee.getBasicPay(),employee.getDa(),employee.getHra(),employee.getAllowance(),employee.getPf(),employee.getSalary(),employee.getDesignation());
+		sc.close();
 	}
 	
 	public static void generateSalarySlip(int empid, String name, double basic, double da, double hra, double allow, double pf, double sal, String designation) {
-		System.out.println("Salary Slip");
+		System.out.println("\nSalary Slip");
+		System.out.println("***********");
 		System.out.println("Designation:"+designation);
 		System.out.println("Employee ID:"+empid);
 		System.out.println("Employee Name:"+name);
 		System.out.println("Basic Pay:"+basic);
 		System.out.println("Dearness Allowance:"+da);
+		System.out.println("House Rent Allowance:"+hra);
 		System.out.println("Other Allowances:"+allow);
 		System.out.println("Provident Fund:"+pf);
 		System.out.println("Net Salary:"+sal);
@@ -169,7 +168,13 @@ abstract class  Employee{
 		this.designation = designation;
 	}
 
-
+	public void saveSalaryDetails(double da, double hra,double allow, double pf) {
+		setDa(da);
+		setHra(hra);
+		setAllowance(allow);
+		setPf(pf);
+	}
+	
 	public abstract double computeSalary();
 }
 
@@ -181,17 +186,12 @@ class Accountant extends Employee{
 
 	@Override
 	public double computeSalary() {
-		this.da = this.basicPay * 0.75;
-		setDa(this.da);
-		this.hra = this.basicPay * 0.30;
-		setHra(this.hra);
-		this.allowance = this.basicPay * 0.20;
-		setAllowance(this.allowance);
-		this.pf = (this.basicPay + this.da)*0.12;
-		setPf(this.pf);
-		this.salary = this.basicPay + this.da + this.hra + this.allowance - this.pf;
-		setSalary(this.salary);
-		return this.salary;
+		setDa(this.getBasicPay() * 0.75);
+		setHra(this.getBasicPay() * 0.30);
+		setAllowance(this.getBasicPay() * 0.20);
+		setPf((this.getBasicPay() + this.getDa())*0.12);
+		setSalary(this.getBasicPay() + this.getDa() + this.getHra() + this.getAllowance() - this.getPf());
+		return this.getSalary();
 	}
 	
 }
@@ -205,17 +205,12 @@ class SoftwareEngineer extends Employee{
 
 	@Override
 	public double computeSalary() {
-		this.da = this.basicPay * 0.80;
-		setDa(this.da);
-		this.hra = this.basicPay * 0.35;
-		setHra(this.hra);
-		this.allowance = this.basicPay * 0.20;
-		setAllowance(this.allowance);
-		this.pf = (this.basicPay + this.da)*0.12;
-		setPf(this.pf);
-		this.salary = this.basicPay + this.da + this.hra + this.allowance - this.pf;
-		setSalary(this.salary);
-		return this.salary;
+		setDa(this.getBasicPay() * 0.80);
+		setHra(this.getBasicPay() * 0.35);
+		setAllowance(this.getBasicPay() * 0.20);
+		setPf((this.getBasicPay() + this.getDa())*0.12);
+		setSalary(this.getBasicPay() + this.getDa() + this.getHra() + this.getAllowance() - this.getPf());
+		return this.getSalary();
 	}
 	
 }
@@ -228,17 +223,12 @@ class Manager extends Employee{
 
 	@Override
 	public double computeSalary() {
-		this.da = this.basicPay * 0.90;
-		setDa(this.da);
-		this.hra = this.basicPay * 0.40;
-		setHra(this.hra);
-		this.allowance = this.basicPay * 0.20;
-		setAllowance(this.allowance);
-		this.pf = (this.basicPay + this.da)*0.12;
-		setPf(this.pf);
-		this.salary = this.basicPay + this.da + this.hra + this.allowance - this.pf;
-		setSalary(this.salary);
-		return this.salary;
+		setDa(this.getBasicPay() * 0.90);
+		setHra(this.getBasicPay() * 0.40);
+		setAllowance(this.getBasicPay() * 0.20);
+		setPf((this.getBasicPay() + this.getDa())*0.12);
+		setSalary(this.getBasicPay() + this.getDa() + this.getHra() + this.getAllowance() - this.getPf());
+		return this.getSalary();
 	}
 	
 }
@@ -252,17 +242,12 @@ class Designer extends Employee{
 
 	@Override
 	public double computeSalary() {
-		this.da = this.basicPay * 0.60;
-		setDa(this.da);
-		this.hra = this.basicPay * 0.30;
-		setHra(this.hra);
-		this.allowance = this.basicPay * 0.20;
-		setAllowance(this.allowance);
-		this.pf = (this.basicPay + this.da)*0.12;
-		setPf(this.pf);
-		this.salary = this.basicPay + this.da + this.hra + this.allowance - this.pf;
-		setSalary(this.salary);
-		return this.salary;
+		setDa(this.getBasicPay() * 0.60);
+		setHra(this.getBasicPay() * 0.30);
+		setAllowance(this.getBasicPay() * 0.20);
+		setPf((this.getBasicPay() + this.getDa())*0.12);
+		setSalary(this.getBasicPay() + this.getDa() + this.getHra() + this.getAllowance() - this.getPf());
+		return this.getSalary();
 	}
 	
 }
