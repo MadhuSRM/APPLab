@@ -14,7 +14,7 @@ public class PreparedDatabaseDemo {
 		int regno = sc.nextInt();
 		String connectionUrl = "jdbc:mysql://localhost:3307/srm";
 		String userName = "root";
-		String password = "Amar@1953";
+		String password = "password";
 		String query = "select * from student where regno=?";
 		// Class.forName("com.mysql.cj.jdbc.Driver");
 		try (Connection connection = DriverManager.getConnection(connectionUrl, userName, password);
