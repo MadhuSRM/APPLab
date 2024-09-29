@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Sep 21 13:43:49 2024
-
-@author: hp
-"""
-
 #Reverse Number - while demo
 def reverseNumber(num):
     result = temp = 0
